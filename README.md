@@ -22,9 +22,9 @@ Detection Engine
 
 **AUTH-001: Repeated Authentication Failures**
 
-The first detection correlates failed authentication events by `source_ip + username` inside a configurable time window. The default threshold is **5 failures within 300 seconds**.
+The detection engine correlates failed authentication events by `source_ip + username` inside a configurable time window. The default threshold is **5 failures within 300 seconds**.
 
-The detector also resets the failure sequence after a successful authentication and ignores failures that fall outside the configured window.
+The detector resets the failure sequence after a successful authentication and removes events that fall outside the configured window. Alerts include severity, evidence, timestamps, rule ID, and a human-readable message.
 
 ## Project structure
 
@@ -37,9 +37,11 @@ SentinelLog/
 │       ├── __init__.py
 │       ├── cli.py
 │       ├── detector.py
+│       ├── events.py
 │       └── parser.py
 ├── tests/
-│   └── test_detector.py
+│   └── test_sentinellog.py
+├── .github/workflows/ci.yml
 ├── .gitignore
 ├── LICENSE
 └── pyproject.toml
@@ -65,7 +67,7 @@ JSON output:
 sentinellog examples/auth.log --json
 ```
 
-Custom detection threshold and window:
+Custom threshold and time window:
 
 ```bash
 sentinellog examples/auth.log --threshold 3 --window 120
@@ -73,12 +75,14 @@ sentinellog examples/auth.log --threshold 3 --window 120
 
 ## Development
 
-Run tests with pytest:
+Install the test dependencies and run the full suite:
 
 ```bash
-pip install pytest
-pytest
+pip install -e .[test]
+pytest -q
 ```
+
+GitHub Actions runs the test suite against Python 3.11, 3.12, and 3.13.
 
 ## Security model
 
@@ -88,24 +92,26 @@ Use only telemetry from systems you own or are explicitly authorized to monitor.
 
 ## Roadmap
 
-### Phase 1
+### Phase 1: Core detector
 - [x] Repository foundation
 - [x] Python project structure
 - [x] Authentication log parser
 - [x] Failed-login detector
+- [x] Configurable threshold and time window
 - [x] CLI interface
 - [x] JSON alerts
-- [x] Initial unit tests
+- [x] Unit tests
+- [x] Structured security-event schema
+- [x] CI test workflow
 
-### Phase 2
+### Phase 2: Detection expansion
 - [ ] Additional authentication formats
-- [ ] Time-window correlation improvements
-- [ ] Rule configuration
-- [ ] Severity model
-- [ ] Structured event schema
-- [ ] Larger sample dataset
+- [ ] Multiple detection rules
+- [ ] Rule configuration file
+- [ ] Source-level aggregation
+- [ ] Successful-login-after-failures correlation
 
-### Phase 3
+### Phase 3: Operations
 - [ ] Real-time log streaming
 - [ ] Alert persistence
 - [ ] Web dashboard
