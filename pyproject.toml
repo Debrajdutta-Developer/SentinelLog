@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sentinellog"
-version = "0.2.0"
-description = "Defensive authentication log monitoring and suspicious activity detection"
+version = "0.3.0"
+description = "Defensive authentication log monitoring and correlation-based detection"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{name = "Debraj Dutta"}]
