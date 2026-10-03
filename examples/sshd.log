@@ -1,0 +1,6 @@
+Oct  3 08:00:01 lab sshd[1001]: Failed password for alice from 192.0.2.10 port 22 ssh2
+Oct  3 08:00:20 lab sshd[1002]: Failed password for alice from 192.0.2.10 port 22 ssh2
+Oct  3 08:00:39 lab sshd[1003]: Failed password for alice from 192.0.2.10 port 22 ssh2
+Oct  3 08:01:02 lab sshd[1004]: Failed password for alice from 192.0.2.10 port 22 ssh2
+Oct  3 08:01:20 lab sshd[1005]: Failed password for alice from 192.0.2.10 port 22 ssh2
+Oct  3 08:03:00 lab sshd[1006]: Accepted password for alice from 192.0.2.10 port 22 ssh2
