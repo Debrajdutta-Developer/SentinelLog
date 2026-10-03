@@ -4,15 +4,22 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sentinellog"
-version = "0.1.0"
+version = "0.2.0"
 description = "Defensive authentication log monitoring and suspicious activity detection"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{name = "Debraj Dutta"}]
 license = {text = "MIT"}
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest>=8,<9"]
 
 [project.scripts]
 sentinellog = "sentinellog.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
