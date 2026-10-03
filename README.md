@@ -1,78 +1,109 @@
 # SentinelLog 🛡️
 
-**SentinelLog** is a Python-based security log monitoring and detection project focused on identifying suspicious authentication activity from structured logs.
+**SentinelLog** is a Python-based defensive security monitoring project that turns authentication telemetry into actionable security alerts.
 
-> Built for defensive security research, local labs, and learning.
+> Built for authorized systems, local labs, and defensive security research.
 
-## 🎯 Project Goal
-
-Turn raw authentication events into useful security signals:
+## What it does
 
 ```text
-Log Events → Parser → Detection Engine → Security Event → Alert
+Authentication Logs
+        ↓
+     Parser
+        ↓
+Detection Engine
+        ↓
+ Security Alert
+        ↓
+   CLI / JSON
 ```
 
-The first release focuses on authentication telemetry and repeated failed-login activity.
+### Current detection rule
 
-## Planned Detection Capabilities
+**AUTH-001: Repeated Authentication Failures**
 
-- Failed-login threshold detection
-- Repeated authentication failures from the same source
-- Successful login after repeated failures
-- Source/IP aggregation
-- Time-window based detection
-- Structured security alerts
-- JSON output for automation
-- Unit tests for detection logic
+The first detection correlates failed authentication events by `source_ip + username` inside a configurable time window. The default threshold is **5 failures within 300 seconds**.
 
-## Architecture
+The detector also resets the failure sequence after a successful authentication and ignores failures that fall outside the configured window.
+
+## Project structure
 
 ```text
-                    ┌─────────────────┐
-                    │ Authentication  │
-                    │      Logs       │
-                    └────────┬────────┘
-                             │
-                             ▼
-                    ┌─────────────────┐
-                    │     Parser      │
-                    └────────┬────────┘
-                             │
-                             ▼
-                    ┌─────────────────┐
-                    │ Detection Engine│
-                    └────────┬────────┘
-                             │
-                    ┌────────▼────────┐
-                    │ Security Events │
-                    └────────┬────────┘
-                             │
-                             ▼
-                    ┌─────────────────┐
-                    │ Alert / JSON    │
-                    └─────────────────┘
+SentinelLog/
+├── examples/
+│   └── auth.log
+├── src/
+│   └── sentinellog/
+│       ├── __init__.py
+│       ├── cli.py
+│       ├── detector.py
+│       └── parser.py
+├── tests/
+│   └── test_detector.py
+├── .gitignore
+├── LICENSE
+└── pyproject.toml
 ```
 
-## Security Scope
+## Quick start
 
-SentinelLog is intended for systems and log data that you own or are explicitly authorized to monitor. It does not perform offensive access or exploitation.
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
+```
+
+Run the sample telemetry:
+
+```bash
+sentinellog examples/auth.log
+```
+
+JSON output:
+
+```bash
+sentinellog examples/auth.log --json
+```
+
+Custom detection threshold and window:
+
+```bash
+sentinellog examples/auth.log --threshold 3 --window 120
+```
+
+## Development
+
+Run tests with pytest:
+
+```bash
+pip install pytest
+pytest
+```
+
+## Security model
+
+SentinelLog is a monitoring and detection tool. It does not attempt unauthorized access, exploitation, credential attacks, or automated intrusion.
+
+Use only telemetry from systems you own or are explicitly authorized to monitor.
 
 ## Roadmap
 
 ### Phase 1
 - [x] Repository foundation
-- [ ] Python project structure
-- [ ] Log parser
-- [ ] Failed-login detector
-- [ ] CLI interface
-- [ ] JSON alerts
+- [x] Python project structure
+- [x] Authentication log parser
+- [x] Failed-login detector
+- [x] CLI interface
+- [x] JSON alerts
+- [x] Initial unit tests
 
 ### Phase 2
-- [ ] Time-window correlation
-- [ ] Detection rules
-- [ ] Severity classification
-- [ ] Test suite
-- [ ] Sample security dataset
+- [ ] Additional authentication formats
+- [ ] Time-window correlation improvements
+- [ ] Rule configuration
+- [ ] Severity model
+- [ ] Structured event schema
+- [ ] Larger sample dataset
 
 ### Phase 3
 - [ ] Real-time log streaming
