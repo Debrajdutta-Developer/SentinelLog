@@ -26,9 +26,9 @@ AUTH-001 AUTH-002 AUTH-003
 
 ## Detection coverage
 
-| Rule | Signal | Default | Severity |
+| Rule | Signal | Default policy | Severity |
 |---|---|---:|---|
-| **AUTH-001** | Repeated failures for the same source + user | 5 / 300s | Medium → High |
+| **AUTH-001** | Repeated failures for the same source + user | 5 / 300s | Medium |
 | **AUTH-002** | Repeated failures from one source across users | 5 / 300s, 2+ users | High |
 | **AUTH-003** | Successful authentication after repeated failures | 3 / 300s | High |
 
@@ -119,6 +119,8 @@ SentinelLog/
 │   └── sshd.log
 ├── docs/
 │   ├── ARCHITECTURE.md
+│   ├── DETECTION_MATRIX.md
+│   ├── DEMO.md
 │   ├── DETECTION_RULES.md
 │   ├── LINKEDIN_LAUNCH.md
 │   └── THREAT_MODEL.md
@@ -129,11 +131,10 @@ SentinelLog/
 │   ├── events.py
 │   └── parser.py
 ├── tests/
-│   ├── test_detector.py
-│   ├── test_rules.py
-│   └── test_sentinellog.py
 ├── .github/workflows/ci.yml
+├── CONTRIBUTING.md
 ├── LICENSE
+├── SECURITY.md
 ├── pyproject.toml
 └── README.md
 ```
@@ -153,28 +154,34 @@ SentinelLog is a defensive monitoring component. It does not perform credential 
 
 Use only telemetry from systems you own or are explicitly authorized to monitor. Do not commit production logs, credentials, tokens, or unnecessary personal data.
 
-See [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md) for scope and limitations.
+See [`SECURITY.md`](SECURITY.md) and [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md).
 
 ## Documentation
 
 - [Architecture](docs/ARCHITECTURE.md)
+- [Detection Matrix](docs/DETECTION_MATRIX.md)
 - [Detection Rules](docs/DETECTION_RULES.md)
+- [Demo Guide](docs/DEMO.md)
 - [Threat Model](docs/THREAT_MODEL.md)
+- [Security Policy](SECURITY.md)
+- [Contributing](CONTRIBUTING.md)
 - [LinkedIn Launch Kit](docs/LINKEDIN_LAUNCH.md)
 
-## Roadmap
+## Release scope
 
-### Completed in v0.3.0
+### v0.3.0
 - [x] Core authentication parser
 - [x] OpenSSH log parsing
 - [x] AUTH-001 repeated-failure detection
-- [x] AUTH-002 password-spraying signal
+- [x] AUTH-002 cross-account failure detection
 - [x] AUTH-003 post-failure-success correlation
 - [x] Configurable thresholds and time windows
 - [x] CLI and stdin support
 - [x] Structured JSON alerts
 - [x] Unit tests and CI
 - [x] Architecture, detection and threat-model documentation
+- [x] Security and contribution policies
+- [x] Reproducible synthetic demo documentation
 
 ### Future engineering work
 - [ ] Stateful real-time tailing without re-reading the full file
