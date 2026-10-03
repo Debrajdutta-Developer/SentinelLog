@@ -1,0 +1,7 @@
+2026-10-03T08:00:01Z user=alice ip=192.0.2.10 result=failed
+2026-10-03T08:00:20Z user=alice ip=192.0.2.10 result=failed
+2026-10-03T08:00:39Z user=alice ip=192.0.2.10 result=failed
+2026-10-03T08:01:02Z user=alice ip=192.0.2.10 result=failed
+2026-10-03T08:01:20Z user=alice ip=192.0.2.10 result=failed
+2026-10-03T08:02:10Z user=bob ip=198.51.100.7 result=success
+2026-10-03T08:03:00Z user=alice ip=192.0.2.10 result=success
